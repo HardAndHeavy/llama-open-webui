@@ -1,0 +1,26 @@
+services:
+  llama-cpp:
+    image: ghcr.io/ggml-org/llama.cpp:server-rocm-b8953
+    devices:
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    command: >
+      --models-dir /models
+      --port 8080
+      --host 0.0.0.0
+      --ctx-size 32000
+      --flash-attn on
+    volumes:
+      - ./data/models:/models:ro
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:0.9.2
+    depends_on:
+      - llama-cpp
+    ports:
+      - 80:8080
+    environment:
+      - OPENAI_API_BASE_URL=http://llama-cpp:8080/v1
+      - WEBUI_SECRET_KEY=
+    volumes:
+      - ./data/open-webui:/app/backend/data
