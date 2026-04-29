@@ -7,6 +7,5 @@ git clone https://github.com/HardAndHeavy/llama-open-webui
 cd llama-open-webui
 make run
 ```
-```
 
 Open http://localhost.
