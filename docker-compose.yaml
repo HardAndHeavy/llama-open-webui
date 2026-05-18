@@ -1,6 +1,6 @@
 services:
   llama-cpp:
-    image: ghcr.io/ggml-org/llama.cpp:server-rocm-b9115
+    image: ghcr.io/ggml-org/llama.cpp:server-rocm-b9209
     devices:
       - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
