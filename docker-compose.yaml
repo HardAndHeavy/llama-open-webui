@@ -1,6 +1,6 @@
 services:
   llama-cpp:
-    image: ghcr.io/ggml-org/llama.cpp:server-rocm-b9209
+    image: ghcr.io/ggml-org/llama.cpp:server-rocm-b9473
     devices:
       - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
@@ -14,7 +14,7 @@ services:
       - ./data/models:/models:ro
 
   open-webui:
-    image: ghcr.io/open-webui/open-webui:0.9.5
+    image: ghcr.io/open-webui/open-webui:0.9.6
     depends_on:
       - llama-cpp
     ports:
