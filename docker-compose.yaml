@@ -8,7 +8,7 @@ services:
       --models-dir /models
       --port 8080
       --host 0.0.0.0
-      --ctx-size 32000
+      --ctx-size 96000
       --flash-attn on
     ports:
       - 8080:8080
