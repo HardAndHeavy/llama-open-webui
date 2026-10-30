@@ -5,8 +5,8 @@ services:
       - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
     group_add:
-      - video
-      - "${RENDER_GID:-render}"
+      - "${VIDEO_GID:?Run make run-strata to detect GPU groups}"
+      - "${RENDER_GID:?Run make run-strata to detect GPU groups}"
     ulimits:
       memlock:
         soft: -1
@@ -14,7 +14,7 @@ services:
     shm_size: 2gb
     stop_grace_period: 2m
     ports:
-      - 127.0.0.1:8080:8080
+      - 8080:8080
     environment:
       FAMILY: qwen
       MODEL: IQ2_XS
@@ -25,7 +25,7 @@ services:
       TUNE: skip
       API_KEY: ${STRATA_API_KEY}
     volumes:
-      - ./data/models/flash-next/IQ2_XS:/models:ro
+      - ./data/models:/models:ro
       - ./data/strata:/data
 
   open-webui:

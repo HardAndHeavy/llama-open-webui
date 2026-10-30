@@ -9,11 +9,8 @@ run:
 stop:
 	$(COMPOSE) -f compose.llama.yaml down --remove-orphans
 
-.env:
-	@key=$$(openssl rand -hex 24) && umask 077 && \
-		sed "s/^STRATA_API_KEY=.*/STRATA_API_KEY=$$key/" .env.example > .env
-
-run-strata: .env
+run-strata:
+	bash scripts/prepare-strata.sh
 	$(COMPOSE) -f compose.strata.yaml config -q
 	$(COMPOSE) -f compose.llama.yaml down --remove-orphans
 	$(COMPOSE) -f compose.strata.yaml up -d
