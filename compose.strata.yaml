@@ -1,0 +1,43 @@
+services:
+  strata:
+    image: ghcr.io/niko1221/strata:0.2.8-rocm-gfx120x
+    devices:
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    group_add:
+      - video
+      - "${RENDER_GID:-render}"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    shm_size: 2gb
+    stop_grace_period: 2m
+    ports:
+      - 127.0.0.1:8080:8080
+    environment:
+      FAMILY: qwen
+      MODEL: IQ2_XS
+      MODEL_PATH: /models
+      CONTEXT: 32k
+      PARALLEL: "1"
+      VISION: "off"
+      TUNE: skip
+      API_KEY: ${STRATA_API_KEY}
+    volumes:
+      - ./data/models/flash-next/IQ2_XS:/models:ro
+      - ./data/strata:/data
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.12.5
+    depends_on:
+      - strata
+    ports:
+      - 80:8080
+    environment:
+      - OPENAI_API_BASE_URL=http://strata:8080/v1
+      - OPENAI_API_KEY=${STRATA_API_KEY}
+      - ENABLE_PERSISTENT_CONFIG=False
+      - WEBUI_SECRET_KEY=
+    volumes:
+      - ./data/open-webui:/app/backend/data

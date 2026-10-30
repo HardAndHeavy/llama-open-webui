@@ -20,18 +20,16 @@ SC117_FILES := IQ2_XS/Qwen3.8-Flash-Next-GSQ-RCO-abliterated-IQ2_XS-00001-of-000
 	IQ2_XS/Qwen3.8-Flash-Next-GSQ-RCO-abliterated-IQ2_XS-00002-of-00002.gguf
 SC117_PATHS := $(addprefix $(MODELS_DIR)/flash-next-sc117/,$(SC117_FILES))
 
-.PHONY: models model-coder390 model-davidau model-flash-next model-flash-next-sc117
+.PHONY: model-coder390 model-flash-next model-davidau model-flash-next-sc117
 
 model-coder390: $(CODER390_PATH)
 
-model-davidau: $(DAVIDAU_PATH)
-
 model-flash-next: $(FLASH_NEXT_PATHS)
+
+model-davidau: $(DAVIDAU_PATH)
 
 model-flash-next-sc117: $(SC117_PATHS)
 
-# Keep incomplete downloads separate; rename only after curl succeeds.
-# $(1): repository, $(2): path within the repository.
 define download_model
 	mkdir -p "$(@D)"
 	$(CURL) --fail --location --retry 5 --retry-delay 3 \
