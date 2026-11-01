@@ -18,8 +18,6 @@ Open http://localhost. The backend API is on port 8080.
 
 ```bash
 make model-coder390
-make model-davidau
-make model-flash-next-sc117
 ```
 
 ## Strata
